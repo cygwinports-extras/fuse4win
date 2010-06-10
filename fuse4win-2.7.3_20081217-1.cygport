@@ -1,0 +1,7 @@
+HG_REV=070d3a2e43de
+inherit cmake
+
+DESCRIPTION="Win32 port of Filesystem in Userspace (FUSE) library"
+HOMEPAGE="http://fuse4win.4host.ru/"
+SRC_URI="http://hg.sharesource.org/fuse4win/archive/${HG_REV}.tar.bz2"
+SRC_DIR=${PN}-${HG_REV}

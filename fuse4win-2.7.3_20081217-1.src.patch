@@ -1,0 +1,38 @@
+--- origsrc/fuse4win-070d3a2e43de/CMakeLists.txt	2008-12-17 11:43:09.000000000 -0600
++++ src/fuse4win-070d3a2e43de/CMakeLists.txt	2010-05-17 23:44:32.791811900 -0500
+@@ -37,6 +37,8 @@ ENDIF(WIN32)
+ # library to be built
+ ADD_LIBRARY(fuse SHARED ${fuse_SRCS})
+ ADD_LIBRARY(fuse_static STATIC ${fuse_SRCS})
++SET_TARGET_PROPERTIES(fuse PROPERTIES SOVERSION 2)
++SET_TARGET_PROPERTIES(fuse_static PROPERTIES OUTPUT_NAME "fuse")
+ 
+ 
+ IF(CYGWIN)
+@@ -51,11 +53,13 @@ IF(CYGWIN)
+ 		DESTINATION /usr/include/fuse)
+ 
+ 	INSTALL(TARGETS fuse
+-  		RUNTIME DESTINATION /bin
+-  		LIBRARY DESTINATION /lib
+-  		ARCHIVE DESTINATION /lib
++  		RUNTIME DESTINATION bin
++  		LIBRARY DESTINATION lib
++  		ARCHIVE DESTINATION lib
+ 	)
+ 
+-	INSTALL(FILES package/fuse.pc DESTINATION /lib/pkgconfig)
++	INSTALL(TARGETS fuse_static DESTINATION lib)
++
++	INSTALL(FILES package/fuse.pc DESTINATION lib/pkgconfig)
+ 
+ ENDIF(CYGWIN)
+--- origsrc/fuse4win-070d3a2e43de/src/fusemain.cpp	2008-12-17 11:43:09.000000000 -0600
++++ src/fuse4win-070d3a2e43de/src/fusemain.cpp	2010-05-17 23:41:33.002528500 -0500
+@@ -1,5 +1,6 @@
+ #include <windows.h>
+ #include <errno.h>
++#include <limits.h>
+ #include <sys/utime.h>
+ 
+ #include "fusemain.h"
